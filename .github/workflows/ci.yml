@@ -62,7 +62,7 @@ jobs:
             export DOCKERHUB_USERNAME='${{ secrets.DOCKERHUB_USERNAME }}'; \
             export MONGO_URI='${{ secrets.MONGO_URI }}'; \
             export JWT_SECRET='${{ secrets.JWT_SECRET }}'; \
-            export FRONTEND_URL='${{ env.FRONTEND_URL }}'; \
+            export FRONTEND_URL='${{ vars.FRONTEND_URL }}'; \
             docker-compose pull backend && \
             docker-compose up -d backend\
           "
