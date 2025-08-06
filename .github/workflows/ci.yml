@@ -54,9 +54,11 @@ jobs:
 
       - name: Deploy to server
         run: |
-          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} << 'EOF'
-            docker pull ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
-            docker stop backend || true
-            docker rm backend || true
-            docker run -d --name backend -p 5000:5000 -e MONGO_URI=${{ secrets.MONGO_URI }} -e JWT_SECRET=${{ secrets.JWT_SECRET }} -e FRONTEND_URL=${{ env.FRONTEND_URL }} ${{ secrets.DOCKERHUB_USERNAME }}/backend:latest
-          EOF
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "\
+            export DOCKERHUB_USERNAME='${{ secrets.DOCKERHUB_USERNAME }}'; \
+            export MONGO_URI='${{ secrets.MONGO_URI }}'; \
+            export JWT_SECRET='${{ secrets.JWT_SECRET }}'; \
+            export FRONTEND_URL='${{ env.FRONTEND_URL }}'; \
+            docker-compose pull backend && \
+            docker-compose up -d backend\
+          "
