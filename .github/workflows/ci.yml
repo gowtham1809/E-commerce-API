@@ -63,5 +63,5 @@ jobs:
             export JWT_SECRET='${{ secrets.JWT_SECRET }}'; \
             export FRONTEND_URL='${{ env.FRONTEND_URL }}'; \
             docker-compose pull backend && \
-            docker-compose up -d backend\
+            docker-compose -f /home/ec2-user/E-commerce-API/docker-compose.yml up -d backend\
           "
