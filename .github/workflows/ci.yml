@@ -58,10 +58,11 @@ jobs:
       - name: Deploy to server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }} "\
+            cd /home/ec2-user/E-commerce-API; \
             export DOCKERHUB_USERNAME='${{ secrets.DOCKERHUB_USERNAME }}'; \
             export MONGO_URI='${{ secrets.MONGO_URI }}'; \
             export JWT_SECRET='${{ secrets.JWT_SECRET }}'; \
             export FRONTEND_URL='${{ env.FRONTEND_URL }}'; \
             docker-compose pull backend && \
-            docker-compose -f /home/ec2-user/E-commerce-API/docker-compose.yml up -d backend\
+            docker-compose up -d backend\
           "
